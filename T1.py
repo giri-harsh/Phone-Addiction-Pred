@@ -88,3 +88,158 @@ df_no_outliers.describe()
 # EXPLORATORY DATA ANALYSIS
 
 # %%
+
+# top 5 phone usage purposes vs average time spent
+sns.set(style="whitegrid", palette="pastel")
+
+
+top_activities = df.groupby("Phone_Usage_Purpose")["Daily_Usage_Hours"].mean().sort_values(ascending=False).head(5)
+
+plt.figure(figsize=(8,6))
+sns.barplot(x=top_activities.index, y=top_activities.values, palette="Blues_r")
+plt.title("Top 5 Activities by Avg Time Spent")
+plt.ylabel("Avg Daily Usage Hours")
+plt.xlabel("Phone Usage Purpose")
+plt.xticks(rotation=30)
+plt.show()
+
+# usage vs academic performance
+plt.figure(figsize=(8,6))
+sns.scatterplot(
+    data=df, 
+    x="Daily_Usage_Hours", 
+    y="Academic_Performance", 
+    hue="Addiction_Level",  
+    palette="coolwarm",
+    alpha=0.7
+)
+plt.title("Daily Usage Hours vs Academic Performance")
+plt.xlabel("Daily Usage Hours")
+plt.ylabel("Academic Performance")
+plt.show()
+
+#sleep patterns
+
+plt.figure(figsize=(8,6))
+sns.boxplot(data=df, x="Addiction_Level", y="Sleep_Hours", palette="Set2")
+
+plt.title("Sleep Patterns by Addiction Level", fontsize=14, fontweight="bold")
+plt.xlabel("Addiction Level")
+plt.ylabel("Sleep Hours per Night")
+plt.grid(axis="y", linestyle="--", alpha=0.7)
+plt.show()
+
+#bedtime phone usage vs sleep quALITY
+
+plt.figure(figsize=(8,6))
+sns.boxplot(x="Screen_Time_Before_Bed", y="Sleep_Hours", data=df, palette="coolwarm")
+
+plt.title("Impact of Bedtime Phone Usage on Sleep Hours", fontsize=14)
+plt.xlabel("Phone Usage Before Bed", fontsize=12)
+plt.ylabel("Sleep Hours", fontsize=12)
+plt.show()
+
+
+# Mental Health Indicators vs Addiction Level
+
+
+
+# Anxiety vs Addiction
+plt.figure(figsize=(6,4))
+sns.boxplot(data=df, x="Addiction_Level", y="Anxiety_Level", palette="Set2")
+plt.title("Anxiety Level by Addiction Severity")
+plt.xlabel("Addiction Level")
+plt.ylabel("Anxiety Level")
+plt.show()
+
+# Depression vs Addiction
+plt.figure(figsize=(6,4))
+sns.boxplot(data=df, x="Addiction_Level", y="Depression_Level", palette="Set2")
+plt.title("Depression Level by Addiction Severity")
+plt.xlabel("Addiction Level")
+plt.ylabel("Depression Level")
+plt.show()
+
+# Self-Esteem vs Addiction
+plt.figure(figsize=(6,4))
+sns.boxplot(data=df, x="Addiction_Level", y="Self_Esteem", palette="Set2")
+plt.title("Self-Esteem by Addiction Severity")
+plt.xlabel("Addiction Level")
+plt.ylabel("Self-Esteem")
+plt.show()
+
+
+
+#%%
+
+# DATA VISUALIZATION 
+
+#%%
+#  Daily_Usage_Hours, Sleep_Hours
+plt.figure(figsize=(12,5))
+
+plt.subplot(1,2,1)
+sns.histplot(df["Daily_Usage_Hours"], bins=20, kde=True, color="skyblue")
+plt.title("Distribution of Daily Usage Hours")
+
+plt.subplot(1,2,2)
+sns.histplot(df["Sleep_Hours"], bins=20, kde=True, color="salmon")
+plt.title("Distribution of Sleep Hours")
+
+plt.tight_layout()
+plt.show()
+
+
+
+#  Heatmap Correlation
+plt.figure(figsize=(7,5))
+corr_cols = ["Daily_Usage_Hours","Sleep_Hours","Academic_Performance","Anxiety_Level"]
+sns.heatmap(df[corr_cols].corr(), annot=True, cmap="coolwarm", fmt=".2f")
+plt.title("Correlation Heatmap")
+plt.show()
+
+
+# Gender vs Avg Addiction_Level
+plt.figure(figsize=(6,4))
+sns.barplot(data=df, x="Gender", y="Addiction_Level", estimator="mean", ci=None, palette="Set2")
+plt.title("Average Addiction Level by Gender")
+plt.show()
+
+
+# Time_on_Gaming vs Academic_Performance
+plt.figure(figsize=(6,4))
+sns.scatterplot(data=df, x="Time_on_Gaming", y="Academic_Performance", hue="Addiction_Level", palette="coolwarm")
+plt.title("Gaming Time vs Academic Performance")
+plt.show()
+
+
+
+#insights from data
+#%%
+#Addiction vs Academic Performance 
+plt.figure(figsize=(6,4))
+sns.boxplot(x="Addiction_Level", y="Academic_Performance", data=df, palette="coolwarm")
+plt.title("Addiction Level vs Academic Performance")
+plt.show()
+
+
+# Addiction vs Sleep Hours
+plt.figure(figsize=(6,4))
+sns.boxplot(x="Addiction_Level", y="Sleep_Hours", data=df, palette="muted")
+plt.title("Impact of Addiction on Sleep Hours")
+plt.show()
+
+
+# Addiction vs Mental Health 
+plt.figure(figsize=(8,5))
+sns.lineplot(data=df, x="Addiction_Level", y="Anxiety_Level", label="Anxiety", marker="o")
+sns.lineplot(data=df, x="Addiction_Level", y="Depression_Level", label="Depression", marker="o")
+sns.lineplot(data=df, x="Addiction_Level", y="Self_Esteem", label="Self-Esteem", marker="o")
+plt.title("Mental Health Indicators vs Addiction Level")
+plt.legend()
+plt.show()
+
+
+
+
+# %%
