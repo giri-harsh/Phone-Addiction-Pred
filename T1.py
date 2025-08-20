@@ -4,7 +4,11 @@ import numpy as np
 from sklearn.preprocessing import OneHotEncoder 
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
 
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 #%%
 
 
@@ -242,4 +246,26 @@ plt.show()
 
 
 
+# %%
+X = df_no_outliers.drop(columns=["Addiction_Level"])
+y = df_no_outliers["Addiction_Level"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42) 
+#%%
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+rf = RandomForestRegressor(n_estimators=100, random_state=42)
+rf.fit(X_train, y_train)
+y_pred = rf.predict(X_test)
+# %%
+mse = mean_squared_error(y_test, y_pred)
+mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"Mean Squared Error: {mse:.2f}")
+print(f"Mean Absolute Error: {mae:.2f}")
+print(f"R² Score: {r2:.2f}")
+# %%
+# df_no_outliers.info()
 # %%
