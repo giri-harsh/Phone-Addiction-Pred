@@ -269,3 +269,11 @@ print(f"R² Score: {r2:.2f}")
 # %%
 # df_no_outliers.info()
 # %%
+
+###########################
+# output of cleaned dataset
+# 
+# 
+# df_no_outliers.to_csv("teen_phone_addiction_cleaned.csv", index=False)
+# %%
+
