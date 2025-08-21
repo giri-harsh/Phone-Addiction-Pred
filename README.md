@@ -82,4 +82,7 @@ All visualizations will be displayed as the script runs.
 Got questions? Found a bug? Want to collaborate? Drop an issue or connect!
 
 ---
+
+*⚡ 84% accuracy in predicting digital addiction - your phone usage patterns are more predictable than you think*
+
 *⚡ 84% accuracy in predicting digital addiction - your phone usage patterns are more predictable than you think*
